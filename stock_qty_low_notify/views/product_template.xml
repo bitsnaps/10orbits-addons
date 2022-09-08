@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record id="view_stock_qty_low_notify_product_form" model="ir.ui.view">
+            <field name="name">Add Low stock notify field product form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='sale']" position="after" >
+                    <group>
+                        <field name="minimum_qty"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

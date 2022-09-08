@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<odoo>
+<data>
+    <record id="view_account_payment_filter" model="ir.ui.view">
+        <field name="name">advance_search_filter.view_account_payment_filter</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='transfers_filter']" position="after">
+                <separator/>
+                <filter string="Yesterday"  name="Yesterday" separator="1"
+                         domain="[('payment_date','&gt;=', ((context_today()+datetime.timedelta(days=-1)).strftime('%Y-%m-%d'))), ('payment_date','&lt;=', ((context_today()+datetime.timedelta(days=-1)).strftime('%Y-%m-%d')))]"
+                           help="Yesterday"/>
+                <filter string="Today" name="today" domain="[('payment_date','=',time.strftime('%%Y-%%m-%%d'))]"/>            
+                <filter string="This Week" name="thisweek"
+                            domain="[
+                                '&amp;',
+                                ('payment_date', '>=', (context_today() + relativedelta(weeks=-1,days=1,weekday=0)).strftime('%Y-%m-%d')),
+                                ('payment_date', '&lt;=', (context_today() + relativedelta(weekday=6)).strftime('%Y-%m-%d')),
+                            ]"/>
+                <filter string="This Month" name="thismonth" domain="[('payment_date','&gt;=',time.strftime('%%Y-%%m-01'))]"/>
+                <filter string="This Year" name="thisyear" domain="[('payment_date','&gt;=',time.strftime('%%Y-01-01'))]"/>
+                <separator/>
+            </xpath>
+        </field>
+    </record>
+</data>
+</odoo>

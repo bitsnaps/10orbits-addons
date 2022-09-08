@@ -1,0 +1,29 @@
+<odoo>
+    <data>
+    <!-- include Search Filter in Sale Order base view (Quotation, Sale Order, Order to invoice , Order to Upsell)  -->
+    <record id="sale_order_view_search_inherit_sale" model="ir.ui.view">
+        <field name="name">advance_search_filter.sale_order_view_search_inherit_sale</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='my_sale_orders_filter']" position="after">
+                <separator/>
+                <filter string="Yesterday"  name="Yesterday" separator="1"
+                         domain="[('date_order','&gt;=', ((context_today()+datetime.timedelta(days=-1)).strftime('%Y-%m-%d'))), ('date_order','&lt;=', ((context_today()+datetime.timedelta(days=-1)).strftime('%Y-%m-%d')))]"
+                           help="Yesterday"/>
+                <!-- <filter string="Today" name="today" domain="[('date_order','=',time.strftime('%%Y-%%m-%%d'))]"/> -->
+                <filter string="Today" domain="[('date_order', '&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),('date_order', '&lt;=',datetime.datetime.now().strftime('%Y-%m-%d 23:59:59'))]"/>
+                <filter string="This Week" name="thisweek"
+                            domain="[
+                                '&amp;',
+                                ('date_order', '>=', (context_today() + relativedelta(weeks=-1,days=1,weekday=0)).strftime('%Y-%m-%d')),
+                                ('date_order', '&lt;=', (context_today() + relativedelta(weekday=6)).strftime('%Y-%m-%d')),
+                            ]"/>
+                <filter string="This Month" name="thismonth" domain="[('date_order','&gt;=',time.strftime('%%Y-%%m-01'))]"/>
+                <filter string="This Year" name="thisyear" domain="[('date_order','&gt;=',time.strftime('%%Y-01-01'))]"/>
+                <separator/>
+            </xpath>
+        </field>
+    </record>
+</data>
+</odoo>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate="0">
+        <record id="ir_cron_send_low_stock_via_email" model="ir.cron">
+            <field name="name">Check Stock Quantity and Send Notification</field>
+            <field eval="False" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="model_product_template"/>
+            <field name="state">code</field>
+            <field name="code">model.send_low_stock_via_email()</field>
+            <field name="args" eval="'()'"/>
+        </record>
+    </data>
+
+</odoo>
